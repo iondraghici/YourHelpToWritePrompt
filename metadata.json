@@ -1,0 +1,5 @@
+{
+  "name": "ROCRE Prompt Architect",
+  "description": "A professional tool to craft, visualize, and save AI prompts using the R.O.C.R.E. framework (Role, Objective, Context, Restrictions, Examples).",
+  "requestFramePermissions": []
+}
