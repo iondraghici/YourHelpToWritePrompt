@@ -10,6 +10,11 @@ export interface RocreData {
 
 export type RocreKey = keyof RocreData;
 
+export interface RocreOption {
+  label: string;
+  value: string;
+}
+
 export interface RocreSectionConfig {
   key: RocreKey;
   label: string;
@@ -18,4 +23,6 @@ export interface RocreSectionConfig {
   placeholder: string;
   color: string;
   icon: LucideIcon;
+  required?: boolean;
+  options?: RocreOption[];
 }

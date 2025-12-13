@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
-import { Copy, Download, Check, RefreshCw, FileJson } from 'lucide-react';
+import { Copy, Download, Check, RefreshCw, FileJson, AlertCircle } from 'lucide-react';
 import { saveTextFile, formatPrompt } from '../utils/fileUtils';
 import { RocreData } from '../types';
 
 interface PreviewPanelProps {
   data: RocreData;
   onClear: () => void;
+  isValid: boolean;
 }
 
-const PreviewPanel: React.FC<PreviewPanelProps> = ({ data, onClear }) => {
+const PreviewPanel: React.FC<PreviewPanelProps> = ({ data, onClear, isValid }) => {
   const [copied, setCopied] = useState(false);
   const promptText = formatPrompt(data);
   const isEmpty = Object.values(data).every((val) => (val as string).trim() === '');
+  const isDisabled = isEmpty || !isValid;
 
   const handleCopy = async () => {
-    if (isEmpty) return;
+    if (isDisabled) return;
     try {
       await navigator.clipboard.writeText(promptText);
       setCopied(true);
@@ -25,13 +27,13 @@ const PreviewPanel: React.FC<PreviewPanelProps> = ({ data, onClear }) => {
   };
 
   const handleSaveTxt = () => {
-    if (isEmpty) return;
+    if (isDisabled) return;
     const timestamp = new Date().toISOString().slice(0, 10);
     saveTextFile(promptText, `rocre-prompt-${timestamp}.txt`);
   };
 
   const handleExportJson = () => {
-    if (isEmpty) return;
+    if (isDisabled) return;
     const timestamp = new Date().toISOString().slice(0, 10);
     const jsonContent = JSON.stringify(data, null, 2);
     saveTextFile(jsonContent, `rocre-data-${timestamp}.json`, 'application/json');
@@ -69,14 +71,21 @@ const PreviewPanel: React.FC<PreviewPanelProps> = ({ data, onClear }) => {
         </div>
       </div>
 
+      {!isValid && !isEmpty && (
+        <div className="px-4 py-2 bg-red-50 border-t border-red-100 flex items-center justify-center gap-2 text-red-600 text-xs font-medium">
+          <AlertCircle size={14} />
+          Please complete required fields (Role, Objective)
+        </div>
+      )}
+
       <div className="p-4 border-t border-slate-200 bg-white grid grid-cols-1 sm:grid-cols-3 gap-2">
         <button
           onClick={handleCopy}
-          disabled={isEmpty}
+          disabled={isDisabled}
           className={`flex items-center justify-center gap-2 px-3 py-3 rounded-lg font-medium transition-all text-sm ${
             copied
               ? 'bg-green-100 text-green-700 border border-green-200'
-              : isEmpty
+              : isDisabled
               ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
               : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300'
           }`}
@@ -87,9 +96,9 @@ const PreviewPanel: React.FC<PreviewPanelProps> = ({ data, onClear }) => {
 
         <button
           onClick={handleSaveTxt}
-          disabled={isEmpty}
+          disabled={isDisabled}
           className={`flex items-center justify-center gap-2 px-3 py-3 rounded-lg font-medium transition-all shadow-sm text-sm ${
-            isEmpty
+            isDisabled
               ? 'bg-slate-300 text-slate-100 cursor-not-allowed'
               : 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow'
           }`}
@@ -100,9 +109,9 @@ const PreviewPanel: React.FC<PreviewPanelProps> = ({ data, onClear }) => {
 
         <button
           onClick={handleExportJson}
-          disabled={isEmpty}
+          disabled={isDisabled}
           className={`flex items-center justify-center gap-2 px-3 py-3 rounded-lg font-medium transition-all shadow-sm text-sm ${
-            isEmpty
+            isDisabled
               ? 'bg-slate-300 text-slate-100 cursor-not-allowed'
               : 'bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow'
           }`}

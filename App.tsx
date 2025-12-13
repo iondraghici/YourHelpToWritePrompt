@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { PenTool, Loader2, Check } from 'lucide-react';
 import SectionInput from './components/SectionInput';
 import PreviewPanel from './components/PreviewPanel';
@@ -19,8 +19,22 @@ const App: React.FC = () => {
     }
   });
 
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
   const isFirstRender = useRef(true);
+
+  // Validate data
+  const errors = useMemo(() => {
+    const newErrors: Record<string, string> = {};
+    ROCRE_SECTIONS.forEach((section) => {
+      if (section.required && !rocreData[section.key].trim()) {
+        newErrors[section.key] = `${section.label} is required`;
+      }
+    });
+    return newErrors;
+  }, [rocreData]);
+
+  const isValid = Object.keys(errors).length === 0;
 
   // Save to localStorage whenever rocreData changes
   useEffect(() => {
@@ -51,9 +65,17 @@ const App: React.FC = () => {
     }));
   };
 
+  const handleInputBlur = (key: keyof RocreData) => {
+    setTouched((prev) => ({
+      ...prev,
+      [key]: true,
+    }));
+  };
+
   const handleClear = () => {
     setSaveStatus('saving');
     setRocreData(INITIAL_DATA);
+    setTouched({}); // Reset touched state so errors don't show immediately
   };
 
   return (
@@ -112,6 +134,8 @@ const App: React.FC = () => {
                 config={section}
                 value={rocreData[section.key]}
                 onChange={handleInputChange}
+                onBlur={handleInputBlur}
+                error={touched[section.key] ? errors[section.key] : undefined}
               />
             ))}
           </div>
@@ -122,6 +146,7 @@ const App: React.FC = () => {
               <PreviewPanel 
                 data={rocreData} 
                 onClear={handleClear}
+                isValid={isValid}
               />
               
               <div className="mt-6 text-center text-slate-400 text-xs">

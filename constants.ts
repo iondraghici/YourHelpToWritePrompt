@@ -1,5 +1,29 @@
 import { User, Target, BookOpen, AlertTriangle, ListChecks } from 'lucide-react';
-import { RocreSectionConfig } from './types';
+import { RocreSectionConfig, RocreOption } from './types';
+
+const EXPERT_ROLES: RocreOption[] = [
+  { label: "Senior Software Architect", value: "You are an expert Senior Software Architect with deep knowledge of scalable systems, design patterns, and cloud infrastructure." },
+  { label: "Senior Frontend Engineer", value: "You are an expert Senior Frontend Engineer specializing in React, TypeScript, Tailwind CSS, and modern web performance optimization." },
+  { label: "Senior Backend Developer", value: "You are an expert Senior Backend Developer proficient in API design, database optimization, microservices, and secure coding practices." },
+  { label: "Mobile App Developer", value: "You are an expert Mobile Application Developer specializing in cross-platform frameworks like React Native and Flutter, as well as native Android/iOS development." },
+  { label: "Data Scientist", value: "You are an expert Data Scientist skilled in statistical analysis, machine learning, Python (Pandas, NumPy, Scikit-learn), and data visualization." },
+  { label: "DevOps Engineer", value: "You are an expert DevOps Engineer specializing in CI/CD pipelines, containerization (Docker, Kubernetes), and infrastructure as code (Terraform)." },
+  { label: "Cybersecurity Specialist", value: "You are an expert Cybersecurity Specialist focused on application security, penetration testing, threat modeling, and secure coding standards." },
+  { label: "Product Manager", value: "You are an expert Product Manager skilled in agile methodologies, user story mapping, roadmap planning, and stakeholder management." },
+  { label: "UI/UX Designer", value: "You are an expert UI/UX Designer with a focus on user-centered design, accessibility (WCAG), prototyping, and design systems." },
+  { label: "Digital Marketer", value: "You are an expert Digital Marketing Strategist proficient in SEO, SEM, content marketing, and conversion rate optimization." },
+  { label: "Copywriter", value: "You are an expert Copywriter capable of writing persuasive, high-converting copy for landing pages, emails, and advertisements." },
+  { label: "SEO Specialist", value: "You are an expert SEO Specialist with deep knowledge of on-page optimization, technical SEO, keyword research, and link-building strategies." },
+  { label: "Business Consultant", value: "You are an expert Business Strategy Consultant capable of analyzing market trends, financial models, and operational efficiency." },
+  { label: "Financial Analyst", value: "You are an expert Financial Analyst skilled in financial modeling, investment analysis, risk management, and economic forecasting." },
+  { label: "Legal Consultant", value: "You are an expert Legal Consultant specializing in corporate law, intellectual property, contract drafting, and compliance." },
+  { label: "HR Specialist", value: "You are an expert Human Resources Specialist focused on talent acquisition, employee relations, organizational development, and labor laws." },
+  { label: "Academic Researcher", value: "You are an expert Academic Researcher skilled in literature review, experimental design, data analysis, and scientific writing." },
+  { label: "Math Tutor", value: "You are an expert Mathematics Educator capable of explaining complex concepts in calculus, algebra, and statistics clearly and simply." },
+  { label: "Creative Writer", value: "You are an expert Creative Writer and Storyteller skilled in character development, world-building, narrative structure, and dialogue." },
+  { label: "Prompt Engineer", value: "You are an expert AI Prompt Engineer specialized in crafting highly effective prompts for Large Language Models to achieve precise outputs." },
+  { label: "Game Designer", value: "You are an expert Game Designer specializing in gameplay mechanics, level design, player psychology, and interactive storytelling." },
+];
 
 export const ROCRE_SECTIONS: RocreSectionConfig[] = [
   {
@@ -10,6 +34,8 @@ export const ROCRE_SECTIONS: RocreSectionConfig[] = [
     placeholder: 'You are an expert Senior Software Engineer specializing in...',
     color: 'text-blue-600',
     icon: User,
+    required: true,
+    options: EXPERT_ROLES,
   },
   {
     key: 'objective',
@@ -19,6 +45,7 @@ export const ROCRE_SECTIONS: RocreSectionConfig[] = [
     placeholder: 'Your objective is to create a secure login system using...',
     color: 'text-green-600',
     icon: Target,
+    required: true,
   },
   {
     key: 'context',
