@@ -46,7 +46,7 @@ const PreviewPanel: React.FC<PreviewPanelProps> = ({ data, onClear, isValid }) =
   };
 
   return (
-    <div className="h-full flex flex-col bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden sticky top-6">
+    <div className="flex flex-col bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
       <div className="p-4 bg-slate-800 text-white flex items-center justify-between">
         <div>
           <h2 className="font-bold text-lg">Prompt Preview</h2>
@@ -63,8 +63,8 @@ const PreviewPanel: React.FC<PreviewPanelProps> = ({ data, onClear, isValid }) =
         </div>
       </div>
 
-      <div className="flex-1 p-0 relative bg-slate-50 overflow-y-auto max-h-[calc(100vh-250px)] lg:max-h-[calc(100vh-200px)]">
-        <div className="absolute inset-0 p-6">
+      <div className="relative bg-slate-50 overflow-y-auto min-h-[300px] max-h-[60vh]">
+        <div className="p-6">
            <pre className={`w-full h-full whitespace-pre-wrap font-mono text-sm leading-relaxed ${isEmpty ? 'text-slate-400 italic' : 'text-slate-800'}`}>
             {promptText}
           </pre>
