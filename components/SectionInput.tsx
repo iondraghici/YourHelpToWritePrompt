@@ -1,5 +1,5 @@
 import React from 'react';
-import { RocreSectionConfig, RocreData } from '../types';
+import { RocreSectionConfig, RocreData, RocreOption } from '../types';
 import { AlertCircle, ChevronDown } from 'lucide-react';
 
 interface SectionInputProps {
@@ -8,10 +8,12 @@ interface SectionInputProps {
   onChange: (key: keyof RocreData, value: string) => void;
   onBlur: (key: keyof RocreData) => void;
   error?: string;
+  options?: RocreOption[]; // Allow passing dynamic options that override config
 }
 
-const SectionInput: React.FC<SectionInputProps> = ({ config, value, onChange, onBlur, error }) => {
+const SectionInput: React.FC<SectionInputProps> = ({ config, value, onChange, onBlur, error, options }) => {
   const Icon = config.icon;
+  const displayOptions = options || config.options;
 
   const handlePresetChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
@@ -45,7 +47,7 @@ const SectionInput: React.FC<SectionInputProps> = ({ config, value, onChange, on
           </div>
         </div>
 
-        {config.options && config.options.length > 0 && (
+        {displayOptions && displayOptions.length > 0 && (
           <div className="relative min-w-[200px] mt-2 sm:mt-0">
             <select
               onChange={handlePresetChange}
@@ -53,7 +55,7 @@ const SectionInput: React.FC<SectionInputProps> = ({ config, value, onChange, on
               defaultValue=""
             >
               <option value="" disabled>Load Preset...</option>
-              {config.options.map((opt, idx) => (
+              {displayOptions.map((opt, idx) => (
                 <option key={idx} value={opt.value}>
                   {opt.label}
                 </option>

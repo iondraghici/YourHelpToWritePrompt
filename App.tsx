@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { PenTool, Loader2, Check } from 'lucide-react';
 import SectionInput from './components/SectionInput';
 import PreviewPanel from './components/PreviewPanel';
-import { ROCRE_SECTIONS, INITIAL_DATA } from './constants';
+import { ROCRE_SECTIONS, INITIAL_DATA, getObjectivesForRole } from './constants';
 import { RocreData } from './types';
 
 const STORAGE_KEY = 'rocre_saved_data';
@@ -128,16 +128,24 @@ const App: React.FC = () => {
               </p>
             </div>
 
-            {ROCRE_SECTIONS.map((section) => (
-              <SectionInput
-                key={section.key}
-                config={section}
-                value={rocreData[section.key]}
-                onChange={handleInputChange}
-                onBlur={handleInputBlur}
-                error={touched[section.key] ? errors[section.key] : undefined}
-              />
-            ))}
+            {ROCRE_SECTIONS.map((section) => {
+              // Calculate dynamic options for Objective based on Role
+              const dynamicOptions = section.key === 'objective' 
+                ? getObjectivesForRole(rocreData.role) 
+                : undefined;
+
+              return (
+                <SectionInput
+                  key={section.key}
+                  config={section}
+                  value={rocreData[section.key]}
+                  onChange={handleInputChange}
+                  onBlur={handleInputBlur}
+                  error={touched[section.key] ? errors[section.key] : undefined}
+                  options={dynamicOptions}
+                />
+              );
+            })}
           </div>
 
           {/* Right Column: Preview (Sticky) */}
