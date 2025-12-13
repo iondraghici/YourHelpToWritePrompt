@@ -46,17 +46,18 @@ const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
               <h3 className="font-bold text-lg">Local Installation</h3>
             </div>
             <div className="bg-slate-900 rounded-lg p-4 text-xs font-mono text-slate-300 overflow-x-auto">
-              <p className="mb-2 text-slate-500"># 1. Clone the repository (if applicable) or create a new React app</p>
-              <p className="mb-4">npx create-react-app rocre-architect --template typescript</p>
+              <p className="mb-2 text-slate-500"># 1. Create a new project (using Vite)</p>
+              <p className="mb-4 text-yellow-300">npm create vite@latest rocre-architect -- --template react-ts</p>
               
-              <p className="mb-2 text-slate-500"># 2. Install required dependencies</p>
+              <p className="mb-2 text-slate-500"># 2. Install dependencies</p>
               <p className="mb-4">npm install lucide-react</p>
               
               <p className="mb-2 text-slate-500"># 3. Start the development server</p>
-              <p className="text-green-400">npm start</p>
+              <p className="text-green-400">npm run dev</p>
             </div>
             <p className="mt-3 text-sm text-slate-600">
-              You need <a href="https://nodejs.org/" target="_blank" rel="noreferrer" className="text-blue-600 underline">Node.js</a> installed on your machine.
+              Ensure you have <a href="https://nodejs.org/" target="_blank" rel="noreferrer" className="text-blue-600 underline">Node.js</a> installed.
+              For PWA features to work locally, the app is served at <code className="bg-slate-100 px-1 rounded">http://localhost:3000</code> or similar.
             </p>
           </section>
 
@@ -69,14 +70,15 @@ const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
             <div className="space-y-3 text-sm text-slate-600 leading-relaxed">
               <p>You can install ROCRE Architect as a standalone app in Google Chrome (PWA):</p>
               <ol className="list-decimal pl-5 space-y-2">
-                <li>Open this application in <strong>Google Chrome</strong>.</li>
-                <li>Look for the <strong>Install icon</strong> <span className="inline-block align-middle bg-slate-200 rounded px-1 text-[10px] mx-1">↓</span> on the right side of the address bar.</li>
+                <li>Open this application in <strong>Google Chrome</strong> (or Edge/Brave).</li>
+                <li>Ensure you are viewing via <strong>localhost</strong> or <strong>HTTPS</strong>.</li>
+                <li>Look for the <strong>Install icon</strong> <span className="inline-block align-middle bg-slate-200 rounded px-1 text-[10px] mx-1">↓</span> in the address bar (right side).</li>
                 <li>Click <strong>Install</strong> to add it to your desktop or dock.</li>
-                <li>Alternatively, go to <strong>Menu (⋮) &gt; Cast, Save and Share &gt; Install ROCRE Architect...</strong></li>
+                <li>Alternatively: <strong>Menu (⋮) &gt; Cast, Save and Share &gt; Install ROCRE Architect...</strong></li>
               </ol>
               <div className="mt-2 bg-blue-50 text-blue-700 p-3 rounded-lg border border-blue-100 flex gap-2">
                 <Monitor size={16} className="shrink-0 mt-0.5" />
-                <p className="text-xs">Once installed, ROCRE runs in its own window, behaves like a native app, and can be pinned to your taskbar.</p>
+                <p className="text-xs">Once installed, ROCRE runs in its own window, behaves like a native Windows/Mac app, and can be pinned to your taskbar.</p>
               </div>
             </div>
           </section>
