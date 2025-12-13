@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { PenTool, Loader2, Check } from 'lucide-react';
+import { PenTool, Loader2, Check, CircleHelp } from 'lucide-react';
 import SectionInput from './components/SectionInput';
 import PreviewPanel from './components/PreviewPanel';
+import HelpModal from './components/HelpModal';
 import { ROCRE_SECTIONS, INITIAL_DATA, getObjectivesForRole } from './constants';
 import { RocreData } from './types';
 
@@ -21,6 +22,7 @@ const App: React.FC = () => {
 
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
   const isFirstRender = useRef(true);
 
   // Validate data
@@ -80,6 +82,8 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 pb-12">
+      <HelpModal isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
+      
       {/* Header */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -109,9 +113,17 @@ const App: React.FC = () => {
               )}
             </div>
 
-            <div className="hidden sm:block text-sm text-slate-500 border-l border-slate-200 pl-6">
+            <div className="hidden md:block text-sm text-slate-500 border-l border-slate-200 pl-6 mr-6">
               Role • Objective • Context • Restrictions • Examples
             </div>
+
+            <button 
+              onClick={() => setIsHelpOpen(true)}
+              className="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+              title="Help & Installation"
+            >
+              <CircleHelp size={22} />
+            </button>
           </div>
         </div>
       </header>
@@ -121,11 +133,19 @@ const App: React.FC = () => {
           
           {/* Left Column: Inputs */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-6">
-              <h2 className="text-blue-800 font-semibold mb-1">How to use</h2>
-              <p className="text-blue-600 text-sm">
-                Fill in the sections below following the R.O.C.R.E. method. The prompt preview on the right will update automatically as you type.
-              </p>
+            <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-6 flex items-start justify-between">
+              <div>
+                <h2 className="text-blue-800 font-semibold mb-1">How to use</h2>
+                <p className="text-blue-600 text-sm">
+                  Fill in the sections below following the R.O.C.R.E. method. The prompt preview on the right will update automatically as you type.
+                </p>
+              </div>
+              <button 
+                onClick={() => setIsHelpOpen(true)}
+                className="text-xs font-medium text-blue-700 hover:text-blue-800 underline mt-0.5 shrink-0 ml-4"
+              >
+                Read instructions
+              </button>
             </div>
 
             {ROCRE_SECTIONS.map((section) => {

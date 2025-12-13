@@ -1,0 +1,15 @@
+{
+  "short_name": "ROCRE",
+  "name": "ROCRE Prompt Architect",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#2563eb",
+  "background_color": "#f8fafc",
+  "icons": [
+    {
+      "src": "https://esm.sh/lucide-static/icons/pen-tool.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ]
+}
