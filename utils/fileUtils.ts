@@ -1,3 +1,4 @@
+import { createPrompt, buildPrompt } from 'rocre-core';
 /**
  * Saves a string content to a local file in the browser.
  * @param content The string content to save.
